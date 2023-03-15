@@ -72,6 +72,25 @@ public extension Templates {
             addGestureRecognizer()
         }
 
+        public init(
+            sourceView: UIView,
+            configuration buildConfiguration: @escaping ((inout MenuConfiguration) -> Void) = { _ in },
+            content: @escaping () -> [AnyView],
+            fadeLabel: ((Bool) -> Void)? = nil
+        ) {
+            self.sourceView = sourceView
+
+            var configuration = MenuConfiguration()
+            buildConfiguration(&configuration)
+            self.configuration = configuration
+
+            self.content = content()
+            self.fadeLabel = fadeLabel
+            super.init()
+
+            addGestureRecognizer()
+        }
+
         /**
          A built-from-scratch version of the system menu, for UIKit.
          This initializer lets you pass in a single menu item.
